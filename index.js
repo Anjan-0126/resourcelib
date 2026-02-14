@@ -65,9 +65,9 @@ app.get('/debug', async (req, res) => {
         await sequelize.authenticate();
         res.json({
             status: 'ok',
-            database: 'connected',
-            env: process.env.NODE_ENV,
-            db_url_set: !!process.env.DATABASE_URL
+            database: 'connected (SQLite)',
+            env: process.env.VERCEL ? 'vercel' : 'local',
+            storage: process.env.VERCEL ? '/tmp/database.sqlite' : 'local file'
         });
     } catch (error) {
         res.status(500).json({
