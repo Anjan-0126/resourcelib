@@ -78,12 +78,27 @@ app.get('/debug', async (req, res) => {
     }
 });
 
-// Sync Database & Start Server
-sequelize.sync({ force: false }) // force: false avoids dropping tables on restart
-    .then(() => {
-        console.log('Database synced');
+// DB Synchronization Promise
+const dbReady = sequelize.sync({ force: false })
+    .then(() => console.log('Database synced'))
+    .catch(err => console.error('Database sync error:', err));
+
+// Middleware to ensure DB is ready before request
+app.use(async (req, res, next) => {
+    try {
+        await dbReady;
+        next();
+    } catch (error) {
+        console.error('DB Init Error:', error);
+        res.status(500).send('Database Initialization Failed');
+    }
+});
+
+// Start Server (Only locally, Vercel handles this automatically)
+if (require.main === module) {
+    dbReady.then(() => {
         app.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
         });
-    })
-    .catch(err => console.error('Database sync error:', err));
+    });
+}
