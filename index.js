@@ -9,8 +9,6 @@ const authRoutes = require('./routes/auth');
 const resourceRoutes = require('./routes/resources');
 
 const app = express();
-module.exports = app; // Export for Vercel
-
 const PORT = process.env.PORT || 3000;
 
 // Middleware
