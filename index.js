@@ -66,8 +66,8 @@ app.get('/debug', async (req, res) => {
         res.json({
             status: 'ok',
             database: 'connected (SQLite)',
-            env: process.env.VERCEL ? 'vercel' : 'local',
-            storage: process.env.VERCEL ? '/tmp/database.sqlite' : 'local file'
+            env: process.env.RENDER ? 'render' : 'local',
+            storage: 'local file (database.sqlite)'
         });
     } catch (error) {
         res.status(500).json({
