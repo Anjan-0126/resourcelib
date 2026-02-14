@@ -1,0 +1,43 @@
+<%- include('layout') %>
+
+    <div class="resource-detail-container">
+        <div class="resource-header">
+            <span class="badge <%= resource.type %>">
+                <%= resource.type.toUpperCase() %>
+            </span>
+            <h1>
+                <%= resource.title %>
+            </h1>
+            <p class="author">By <%= resource.author || 'Unknown' %>
+            </p>
+        </div>
+
+        <div class="resource-content">
+            <% if (resource.url) { %>
+                <div class="resource-link">
+                    <a href="<%= resource.url %>" target="_blank" class="btn btn-primary">Visit Resource <span
+                            class="icon">↗</span></a>
+                </div>
+                <% } %>
+
+                    <div class="description-box">
+                        <h3>Description</h3>
+                        <p>
+                            <%= resource.description || 'No description available.' %>
+                        </p>
+                    </div>
+
+                    <div class="resource-meta-footer">
+                        <p>Added by <strong>
+                                <%= resource.creator ? resource.creator.username : 'Anonymous' %>
+                            </strong> on <%= new Date(resource.createdAt).toDateString() %>
+                        </p>
+                    </div>
+
+                    <a href="/resources" class="back-link">← Back to Resources</a>
+        </div>
+    </div>
+
+    </body>
+
+    </html>

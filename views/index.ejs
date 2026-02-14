@@ -1,0 +1,35 @@
+<%- include('layout') %>
+
+<div class="hero">
+    <h1>Welcome to Resource Lib</h1>
+    <p>Discover and share valuable resources for learning and growth.</p>
+    <% if (!user) { %>
+        <div class="cta-buttons">
+            <a href="/auth/register" class="btn btn-primary">Get Started</a>
+            <a href="/auth/login" class="btn btn-secondary">Login</a>
+        </div>
+    <% } else { %>
+        <div class="cta-buttons">
+            <a href="/resources/new" class="btn btn-primary">Add Resource</a>
+        </div>
+    <% } %>
+</div>
+
+<section class="resource-grid">
+    <% if (resources.length === 0) { %>
+        <p class="empty-state">No resources available yet. Be the first to share one!</p>
+    <% } else { %>
+        <% resources.forEach(resource => { %>
+            <div class="resource-card">
+                <div class="resource-type <%= resource.type %>"><%= resource.type %></div>
+                <h3><%= resource.title %></h3>
+                <p class="author">by <%= resource.author || 'Unknown' %></p>
+                <p class="description"><%= resource.description ? resource.description.substring(0, 100) + '...' : 'No description' %></p>
+                <div class="card-footer">
+                    <span class="added-by">Added by <%= resource.creator ? resource.creator.username : 'Anonymous' %></span>
+                    <a href="/resources/<%= resource.id %>" class="btn btn-sm">View Details</a>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</section>

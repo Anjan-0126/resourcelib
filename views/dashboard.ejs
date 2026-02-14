@@ -1,0 +1,42 @@
+<%- include('layout') %>
+
+    <div class="dashboard-header">
+        <h2>My Dashboard</h2>
+        <p>Welcome back, <%= user.username %>!</p>
+    </div>
+
+    <section class="dashboard-content">
+        <div class="dashboard-actions">
+            <h3>My Resources</h3>
+            <a href="/resources/new" class="btn btn-sm btn-primary">+ Add New</a>
+        </div>
+
+        <% if (resources && resources.length> 0) { %>
+            <div class="resource-list">
+                <% resources.forEach(resource=> { %>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <strong>
+                                <%= resource.title %>
+                            </strong>
+                            <span class="badge <%= resource.type %>">
+                                <%= resource.type %>
+                            </span>
+                        </div>
+                        <div class="resource-meta">
+                            <span>Added on <%= new Date(resource.createdAt).toLocaleDateString() %></span>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+            <% } else { %>
+                <div class="empty-state">
+                    <p>You haven't added any resources yet.</p>
+                    <a href="/resources/new" class="btn btn-primary">Add your first resource</a>
+                </div>
+                <% } %>
+    </section>
+
+    </body>
+
+    </html>
