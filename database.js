@@ -18,4 +18,9 @@ const sequelize = process.env.DATABASE_URL
         logging: false
     });
 
+// Test connection immediately
+sequelize.authenticate()
+    .then(() => console.log('Database connected...'))
+    .catch(err => console.error('Error: ' + err));
+
 module.exports = sequelize;

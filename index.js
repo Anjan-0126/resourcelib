@@ -59,6 +59,25 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
+// Debug Route (Remove in production if sensitive)
+app.get('/debug', async (req, res) => {
+    try {
+        await sequelize.authenticate();
+        res.json({
+            status: 'ok',
+            database: 'connected',
+            env: process.env.NODE_ENV,
+            db_url_set: !!process.env.DATABASE_URL
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message,
+            stack: error.stack
+        });
+    }
+});
+
 // Sync Database & Start Server
 sequelize.sync({ force: false }) // force: false avoids dropping tables on restart
     .then(() => {
