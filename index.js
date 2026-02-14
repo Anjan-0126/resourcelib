@@ -9,7 +9,6 @@ const authRoutes = require('./routes/auth');
 const resourceRoutes = require('./routes/resources');
 
 const app = express();
-module.exports = app; // Export for Vercel
 
 const PORT = process.env.PORT || 3000;
 
@@ -94,11 +93,9 @@ app.use(async (req, res, next) => {
     }
 });
 
-// Start Server (Only locally, Vercel handles this automatically)
-if (require.main === module) {
-    dbReady.then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        });
+// Start Server
+dbReady.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
     });
-}
+});
